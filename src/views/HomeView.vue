@@ -1,18 +1,44 @@
+<script>
+import mapboxgl from 'mapbox-gl';
+
+export default {
+  data: function () {
+    return {
+      message: "Welcome to Vue.js!",
+    };
+  },
+  mounted: function () {
+    this.createMap();
+  },
+  methods: {
+    createMap: function () {
+      mapboxgl.accessToken = process.env.VUE_APP_MAPBOX_KEY;
+      console.log();
+      const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/mapbox/streets-v11', // style URL
+        center: [-122.33, 47.61], // starting position [lng, lat]
+        zoom: 10,
+        pitch: 30,
+      });
+      map.addControl(new mapboxgl.NavigationControl());
+    }
+  },
+};
+
+;
+</script>
+
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>{{ message }}</h1>
+    <div id='map'></div>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
-export default {
-  name: 'HomeView',
-  components: {
-    HelloWorld
-  }
+<style>
+#map {
+  height: 400px;
+  width: 600px;
 }
-</script>
+</style>
