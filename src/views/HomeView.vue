@@ -5,6 +5,10 @@ export default {
   data: function () {
     return {
       message: "Welcome to Vue.js!",
+      places: [
+        { lng: -122.3493, lat: 47.6205, description: "The Space Needle" },
+        { lat: 47.6135, lng: 122.3315, description: "The Paramount Theater" }
+      ]
     };
   },
   mounted: function () {
@@ -22,6 +26,17 @@ export default {
         pitch: 30,
       });
       map.addControl(new mapboxgl.NavigationControl());
+      // this.places.forEach(function (place) {
+      const popup = new mapboxgl.Popup({ offset: 25 }).setText(
+        'The Space Needle is 605 feet tall.'
+      );
+      const el = document.createElement('div');
+      el.id = 'marker';
+      // })
+      new mapboxgl.Marker(el)
+        .setLngLat([-122.3493, 47.6205])
+        .setPopup(popup) // sets a popup on this marker
+        .addTo(map);
     }
   },
 };
@@ -40,5 +55,19 @@ export default {
 #map {
   height: 400px;
   width: 600px;
+  margin: auto;
+}
+
+#marker {
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/SpaceNeedleTopClose.jpg/305px-SpaceNeedleTopClose.jpg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
 }
 </style>
